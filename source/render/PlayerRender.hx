@@ -11,11 +11,14 @@ import source.data.WDGame;
  */
 class PlayerRender extends FlxSprite {
 
-    public var SPEED = 70;
-    public var justMoved:Bool = false;
+    private var ACCEL = 240;
+    private var MAX_SPEED = 70;
 
     public function new() {
         super(0, 0);
+
+        this.maxVelocity.set(MAX_SPEED, MAX_SPEED);
+
         loadGraphic(AssetPaths.img_char__png);
         centerOrigin();
         centerOffsets();
@@ -26,27 +29,30 @@ class PlayerRender extends FlxSprite {
     override public function update():Void {
         super.update();
 
-        //check input
+        // Control movement
         if (FlxG.keys.pressed.W && !FlxG.keys.pressed.S) {
-            this.velocity.y = -SPEED;
+            this.acceleration.y = -ACCEL;
         }
         else if (!FlxG.keys.pressed.W && FlxG.keys.pressed.S) {
-            this.velocity.y = SPEED;
+            this.acceleration.y = ACCEL;
         }
         else {
             this.velocity.y = 0;
+            this.acceleration.y = 0;
         }
 
         if (FlxG.keys.pressed.A && !FlxG.keys.pressed.D) {
-            this.velocity.x = -SPEED;
+            this.acceleration.x = -ACCEL;
         }
         else if (!FlxG.keys.pressed.A && FlxG.keys.pressed.D) {
-            this.velocity.x = SPEED;
+            this.acceleration.x = ACCEL;
         }
         else {
             this.velocity.x = 0;
+            this.acceleration.x = 0;
         }
 
+        // "Handle" action
         if (FlxG.keys.justPressed.F) {
             trace("try to pick at (" + x +", " + y + ")");
             //DO ACTIONS
