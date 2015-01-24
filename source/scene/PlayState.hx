@@ -85,6 +85,7 @@ class PlayState extends FlxState {
             var itemRender:ItemRender = new ItemRender(wdItem);
             wdItem.linkedRender = itemRender;
             _itemGroup.add(itemRender);
+            entities.add(itemRender);
         }
 
         // Add 3 boxes to the scene
