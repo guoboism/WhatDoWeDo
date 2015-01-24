@@ -9,6 +9,7 @@ class WDItem
 {
 	
 	public var name:String;
+	public var opName:String;
 	
 	//when on ground
 	public var x:Float;
@@ -17,7 +18,12 @@ class WDItem
 	public var pathOnGround:String;
 	public var pathIcon:String;
 	
+	public var scaleOnGround:Float = 1;
+	public var scaleIcon:Float = 1;
+	
+	
 	public var linkedRender:ItemRender;
+	
 	
 	public function new() 
 	{
