@@ -1,9 +1,15 @@
 package render;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
+import flixel.util.FlxPoint;
+import flixel.group.FlxTypedGroup;
 import scene.PlayState;
+
 import source.data.WDGame;
+import render.ItemRender;
 
 /**
  * 渲染玩家
@@ -11,19 +17,23 @@ import source.data.WDGame;
  */
 class PlayerRender extends FlxSprite {
 
-    private var ACCEL = 240;
-    private var MAX_SPEED = 70;
+    private var ACCEL:Int = 240;
+    private var MAX_SPEED:Int = 70;
+
+    // TODO: Use "sensor" to detect nearby items
+    private var _canReachItem:Bool = false;
+    private var _nearbyItem:ItemRender;
 
     public function new() {
         super(0, 0);
 
+        // Setup physics
         this.maxVelocity.set(MAX_SPEED, MAX_SPEED);
 
+        // Initialize graphics
         loadGraphic(AssetPaths.img_char__png);
         centerOrigin();
         centerOffsets();
-
-        trace("char loaded");
     }
 
     override public function update():Void {
@@ -53,13 +63,13 @@ class PlayerRender extends FlxSprite {
         }
 
         // "Handle" action
-        if (FlxG.keys.justPressed.F) {
-            trace("try to pick at (" + x +", " + y + ")");
-            //DO ACTIONS
-
-            //PICK UP item
-            var res:Bool = WDGame.getSelf().tryPickUpItem();
+        if (FlxG.mouse.justPressed) {
+            if (_canReachItem && _nearbyItem != null) {
+                this.pickItem(_nearbyItem);
+            }
         }
+        this._canReachItem = false;
+        this._nearbyItem = null;
 
         //update size with distance
         var distance = this.y - 32 * 6;
@@ -74,6 +84,21 @@ class PlayerRender extends FlxSprite {
         }
         this.scale.y = this.scale.x;
         this.centerOrigin();
+    }
+
+    override public function destroy():Void {
+        super.destroy();
+    }
+
+    public function touchesItem(item:ItemRender):Void {
+        this._canReachItem = true;
+        this._nearbyItem = item;
+    }
+
+    private function pickItem(item:ItemRender):Void {
+        WDGame.getSelf().pickUpItem(item.itemData);
+
+        trace("Picked " + WDGame.getSelf().bagItems.length + " items");
     }
 
 }
