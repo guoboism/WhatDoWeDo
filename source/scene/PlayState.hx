@@ -126,14 +126,19 @@ class PlayState extends FlxState {
         super.update();
 
         FlxG.overlap(_player, _itemGroup, touchesItem);
+        FlxG.collide(_player, _boxes, touchesBox);
+        FlxG.collide(_boxes, _boxes);
         FlxG.collide(_player, sceneMap);
-        FlxG.collide(_player, _boxes);
 
         entities.sort(FlxSort.byY);
     }
 
     public function touchesItem(_player:PlayerRender, item:ItemRender):Void {
         _player.touchesItem(item);
+    }
+
+    public function touchesBox(_player:PlayerRender, box:Box):Void {
+        _player.touchesBox(box);
     }
 
 }
