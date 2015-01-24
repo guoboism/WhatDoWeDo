@@ -9,6 +9,7 @@ import flixel.input.touch.FlxTouchManager;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
@@ -21,6 +22,10 @@ import source.data.WDGame;
 import render.ItemRender;
 import render.PlayerRender;
 import render.Box;
+
+import source.data.WDGame;
+import ui.BagSubState;
+import ui.ItemCell;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -45,6 +50,8 @@ class PlayState extends FlxState {
 
     // UI stuff
     public var uiLayer:FlxGroup;
+    public var o2bg:FlxSprite;
+    public var o2fill:FlxSprite;
 
     // Singleton
     private static var self:PlayState;
@@ -108,9 +115,28 @@ class PlayState extends FlxState {
         _player.y = 200;
         entities.add(_player);
 
+        // Foreground
+        var sceneForeImg:FlxSprite = new FlxSprite(0,520);
+        sceneForeImg.loadGraphic(AssetPaths.img_scene_fore__png);
+        add(sceneForeImg);
+
         // Add UI to the top
         uiLayer.setAll("scrollFactor", FlxPoint.get(0, 0));
         add(uiLayer);
+
+		//bag btn
+		var bagBtn:FlxButton = new FlxButton(750, 50, "", onBagClk);
+		bagBtn.scale.x = bagBtn.scale.y = 0.6;
+		bagBtn.loadGraphic(AssetPaths.bagbutton__fw__png);
+		uiLayer.add(bagBtn);
+
+		//o2
+		o2bg = new FlxSprite(100,50);
+        o2bg.loadGraphic(AssetPaths.y__fw__png);
+		o2fill = new FlxSprite(o2bg.x + 44, o2bg.y + 10);
+		o2fill.makeGraphic(320, 60, FlxColor.AQUAMARINE);
+		add(o2fill);
+        add(o2bg);
     }
 
     /**
@@ -133,6 +159,11 @@ class PlayState extends FlxState {
         FlxG.collide(_player, sceneMap);
 
         entities.sort(FlxSort.byY);
+
+        // Update O2 graphic
+        var prop:Float = WDGame.getSelf().curO2 / WDGame.getSelf().MAX_O2;
+        var length:Int = cast 320 * prop;
+        o2fill.makeGraphic(length, 60, FlxColor.AQUAMARINE);
     }
 
     public function touchesItem(_player:PlayerRender, item:ItemRender):Void {
@@ -142,5 +173,9 @@ class PlayState extends FlxState {
     public function touchesBox(_player:PlayerRender, box:Box):Void {
         _player.touchesBox(box);
     }
+
+	public function onBagClk():Void{
+		this.openSubState(new BagSubState());
+	}
 
 }

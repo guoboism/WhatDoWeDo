@@ -58,6 +58,7 @@ class StateFree extends State {
     public function new(target:PlayerRender) {
         super(target);
     }
+
     override public function enter() {
         target.maxVelocity.set(target.FREE_MAX_SPEED, target.FREE_MAX_SPEED);
     }
@@ -65,9 +66,11 @@ class StateFree extends State {
         // Control movement
         if (FlxG.keys.pressed.W && !FlxG.keys.pressed.S) {
             target.acceleration.y = -target.ACCEL;
+            target._lastFacing = 1;
         }
         else if (!FlxG.keys.pressed.W && FlxG.keys.pressed.S) {
             target.acceleration.y = target.ACCEL;
+            target._lastFacing = 2;
         }
         else {
             target.velocity.y = 0;
@@ -76,13 +79,24 @@ class StateFree extends State {
 
         if (FlxG.keys.pressed.A && !FlxG.keys.pressed.D) {
             target.acceleration.x = -target.ACCEL;
+            target._lastFacing = 3;
         }
         else if (!FlxG.keys.pressed.A && FlxG.keys.pressed.D) {
             target.acceleration.x = target.ACCEL;
+            target._lastFacing = 4;
         }
         else {
             target.velocity.x = 0;
             target.acceleration.x = 0;
+        }
+
+        if (target.velocity.x != 0 || target.velocity.y != 0) {
+            //walking
+            target.animation.play("walk_" + target._lastFacing);
+        }
+        else {
+            //standing
+            target.animation.play("stay_" + target._lastFacing);
         }
     }
     override public function exit() {
@@ -107,9 +121,11 @@ class StateCatchBox extends State {
         // Control movement
         if (FlxG.keys.pressed.W && !FlxG.keys.pressed.S) {
             target.acceleration.y = -target.ACCEL;
+            target._lastFacing = 1;
         }
         else if (!FlxG.keys.pressed.W && FlxG.keys.pressed.S) {
             target.acceleration.y = target.ACCEL;
+            target._lastFacing = 2;
         }
         else {
             target.velocity.y = 0;
@@ -118,13 +134,24 @@ class StateCatchBox extends State {
 
         if (FlxG.keys.pressed.A && !FlxG.keys.pressed.D) {
             target.acceleration.x = -target.ACCEL;
+            target._lastFacing = 3;
         }
         else if (!FlxG.keys.pressed.A && FlxG.keys.pressed.D) {
             target.acceleration.x = target.ACCEL;
+            target._lastFacing = 4;
         }
         else {
             target.velocity.x = 0;
             target.acceleration.x = 0;
+        }
+
+        if (target.velocity.x != 0 || target.velocity.y != 0) {
+            //walking
+            target.animation.play("walk_" + target._lastFacing);
+        }
+        else {
+            //standing
+            target.animation.play("stay_" + target._lastFacing);
         }
 
         // Sync box with player
@@ -152,6 +179,9 @@ class PlayerRender extends FlxSprite {
     private var _canReachItem:Bool = false;
     private var _nearbyItem:ItemRender;
 
+    // Graphic
+    public var _lastFacing:Int = 2; // down
+
     // AI
     private var _brain:FSM;
     private var _stateFree:StateFree;
@@ -165,7 +195,22 @@ class PlayerRender extends FlxSprite {
         super(0, 0);
 
         // Initialize graphics
-        loadGraphic(AssetPaths.img_char__png);
+        loadGraphic(AssetPaths.img_avatar__png, true, 260, 324);
+
+        //dir: 1=up 2=down 3=left 4=right
+        this.animation.add("stay_1", [0], 12);
+        this.animation.add("stay_2", [3], 12);
+        this.animation.add("stay_3", [6], 12);
+        this.animation.add("stay_4", [9], 12);
+
+        this.animation.add("walk_1", [0,1,0,2], 12);
+        this.animation.add("walk_2", [3,4,3,5], 12);
+        this.animation.add("walk_3", [6,7,6,8], 12);
+        this.animation.add("walk_4", [9,10,9,11], 12);
+
+        this.animation.play("stay_2");
+
+        this.setSize(10, 10);
         centerOrigin();
         centerOffsets();
 
@@ -224,12 +269,14 @@ class PlayerRender extends FlxSprite {
         var distance = this.y - 32 * 6;
         var maxDistance = 32 * 10;
         this.scale.x = 0.5 *  Math.sqrt(distance) / Math.sqrt(maxDistance) + 0.5;
+
         if (this.scale.x  > 1) {
             this.scale.x  = 1;
         }
         else if (this.scale.x  < 0.5) {
             this.scale.x  = 0.5;
         }
+        scale.x *= 0.3;
         this.scale.y = this.scale.x;
         this.centerOrigin();
     }

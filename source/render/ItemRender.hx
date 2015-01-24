@@ -32,6 +32,7 @@ class ItemRender extends FlxSprite {
         else if (this.scale.x  < 0.5) {
             this.scale.x  = 0.5;
         }
+		this.scale.x *= itemData.scaleOnGround;
         this.scale.y = this.scale.x;
         centerOrigin();
         centerOffsets();
