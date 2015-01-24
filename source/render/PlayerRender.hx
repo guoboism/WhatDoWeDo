@@ -17,7 +17,7 @@ import render.ItemRender;
  */
 class PlayerRender extends FlxSprite {
 
-    private var ACCEL:Int = 240;
+    private var ACCEL:Int = 360;
     private var MAX_SPEED:Int = 70;
 
     // TODO: Use "sensor" to detect nearby items
