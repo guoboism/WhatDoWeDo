@@ -27,13 +27,16 @@ class PlayerRender extends FlxSprite {
     public function new() {
         super(0, 0);
 
-        // Setup physics
-        this.maxVelocity.set(MAX_SPEED, MAX_SPEED);
-
         // Initialize graphics
         loadGraphic(AssetPaths.img_char__png);
         centerOrigin();
         centerOffsets();
+
+        // Setup physics
+        this.width = 30;
+        this.height = 30;
+        this.offset.set(4, 40);
+        this.maxVelocity.set(MAX_SPEED, MAX_SPEED);
     }
 
     override public function update():Void {
