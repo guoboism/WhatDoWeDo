@@ -12,7 +12,7 @@ class PlayerRender extends FlxSprite
 {
 	
 	
-	public var SPEED = 5;
+	public var SPEED = 100;
 	public var justMoved:Bool = false;
 	
 	public function new() 
@@ -31,34 +31,33 @@ class PlayerRender extends FlxSprite
 		
 		//check input
 		
-		if(FlxG.keys.pressed.UP){
-			justMoved = true;
-			this.y -= SPEED;
-			
-		}else if(FlxG.keys.pressed.DOWN){
-			justMoved = true;
-			this.y += SPEED;
+		if (FlxG.keys.pressed.W && !FlxG.keys.pressed.S) {
+			this.velocity.y = -SPEED;
+		} 
+		else if (!FlxG.keys.pressed.W && FlxG.keys.pressed.S) {
+			this.velocity.y = SPEED;
+		}
+		else {
+			this.velocity.y = 0;
 		}
 		
-		if(FlxG.keys.pressed.LEFT){
-			justMoved = true;
-			this.x -= SPEED;
-		}else if (FlxG.keys.pressed.RIGHT){
-			justMoved = true;
-			this.x += SPEED;
+		if (FlxG.keys.pressed.A && !FlxG.keys.pressed.D) {
+			this.velocity.x = -SPEED;
+		}
+		else if (!FlxG.keys.pressed.A && FlxG.keys.pressed.D) {
+			this.velocity.x = SPEED;
+		}
+		else {
+			this.velocity.x = 0;
 		}
 		
-		if(FlxG.keys.justPressed.F){
-			trace(x +"=" + y);
+		if (FlxG.keys.justPressed.F) {
+			trace("try to pick at (" + x +", " + y + ")");
 			//DO ACTIONS
 			
 			//PICK UP item
 			var res:Bool = WDGame.getSelf().tryPickUpItem();
-			
-			
-			
 		}
-		
 		
 		//update size with distance
 		var distance = this.y - 32 * 6;
