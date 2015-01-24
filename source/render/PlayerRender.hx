@@ -11,6 +11,69 @@ import scene.PlayState;
 import source.data.WDGame;
 import render.ItemRender;
 
+class State {
+    public var target:PlayerRender;
+    public function new(target:PlayerRender) {
+        this.target = target;
+    }
+    public function enter() {}
+    public function exec() {}
+    public function exit() {
+        this.target = null;
+    }
+}
+
+class FSM {
+    public var currState:State;
+    public var nextState:State;
+    public var owner:PlayerRender;
+    public function new(owner:PlayerRender, initState:State):Void {
+        this.owner = owner;
+        changeState(initState);
+    }
+    public function changeState(newState:State):Void {
+        if (newState != currState) {
+            nextState = newState;
+        }
+    }
+    public function update():Void {
+        if (nextState != null) {
+            if (currState != null) {
+                currState.exit();
+            }
+
+            currState = nextState;
+            nextState = null;
+            currState.enter();
+        }
+        if (currState != null) {
+            currState.exec();
+        }
+    }
+}
+
+class StateIdle extends State {
+    public function new(target:PlayerRender) {
+        super(target);
+    }
+    override public function enter() {}
+    override public function exec() {}
+    override public function exit() {
+        super.exit();
+    }
+}
+
+class StateWalk extends State {
+    public function new(target:PlayerRender) {
+        super(target);
+    }
+    override public function enter() {}
+    override public function exec() {}
+    override public function exit() {
+        super.exit();
+    }
+}
+
 /**
  * 渲染玩家
  * @author
@@ -20,9 +83,13 @@ class PlayerRender extends FlxSprite {
     private var ACCEL:Int = 360;
     private var MAX_SPEED:Int = 70;
 
-    // TODO: Use "sensor" to detect nearby items
     private var _canReachItem:Bool = false;
     private var _nearbyItem:ItemRender;
+
+    // AI
+    private var _brain:FSM;
+    private var _idle:StateIdle;
+    private var _walk:StateWalk;
 
     public function new() {
         super(0, 0);
@@ -37,6 +104,11 @@ class PlayerRender extends FlxSprite {
         this.height = 30;
         this.offset.set(4, 40);
         this.maxVelocity.set(MAX_SPEED, MAX_SPEED);
+
+        // Setup AI
+        _idle = new StateIdle(this);
+        _walk = new StateWalk(this);
+        _brain = new FSM(this, _idle);
     }
 
     override public function update():Void {
