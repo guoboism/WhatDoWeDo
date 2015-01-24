@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxPoint;
 import flixel.group.FlxTypedGroup;
+import flixel.ui.FlxButton;
 import scene.PlayState;
 
 import source.data.WDGame;
@@ -156,13 +157,23 @@ class PlayerRender extends FlxSprite {
     private var _stateFree:StateFree;
     private var _stateCatch:StateCatchBox;
 
-    public function new() {
+    // HUD
+    private var _openBoxBtn:FlxButton;
+    private var _releaseBtn:FlxButton;
+
+    public function new(uiLayer:flixel.group.FlxGroup) {
         super(0, 0);
 
         // Initialize graphics
         loadGraphic(AssetPaths.img_char__png);
         centerOrigin();
         centerOffsets();
+
+        // Init HUD
+        _openBoxBtn = new FlxButton(0, 0);
+        _releaseBtn = new FlxButton(0, 0);
+        uiLayer.add(_openBoxBtn);
+        uiLayer.add(_releaseBtn);
 
         // Setup physics
         this.width = 30;

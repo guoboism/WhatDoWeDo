@@ -99,14 +99,16 @@ class PlayState extends FlxState {
             entities.add(box);
         }
 
+        // Create an UI layer
+        uiLayer = new FlxGroup();
+
         // Create our player
-        _player = new PlayerRender();
+        _player = new PlayerRender(uiLayer);
         _player.x = 100;
         _player.y = 200;
         entities.add(_player);
 
-        // Create an UI layer and add to the top
-        uiLayer = new FlxGroup();
+        // Add UI to the top
         uiLayer.setAll("scrollFactor", FlxPoint.get(0, 0));
         add(uiLayer);
     }
