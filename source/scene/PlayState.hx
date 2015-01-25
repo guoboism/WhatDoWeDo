@@ -109,13 +109,20 @@ class PlayState extends FlxState {
         box = new Box(left + 64 * 0.5, top + 48 * 2.5); _boxes.add(box); entities.add(box);
         box = new Box(left + 64 * 1.5, top + 48 * 2.5); _boxes.add(box); entities.add(box);
 
+        left = 240;
+        top = 400;
+        box = new Box(left + 64 * 0.5, top + 48 * 1.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 2.5, top + 48 * 1.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 1.5, top + 48 * 0.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 1.5, top + 48 * 2.5); _boxes.add(box); entities.add(box);
+
         // Create an UI layer
         uiLayer = new FlxGroup();
 
         // Create our player
         _player = new PlayerRender(uiLayer);
-        _player.x = 200;
-        _player.y = 400;
+        _player.x = 350;
+        _player.y = 450;
         entities.add(_player);
 
         // Foreground
