@@ -52,12 +52,6 @@ class WDGame
             item.x = Math.random() * rdRangeW + rdLeft;
             item.y = Math.random() * rdRangeH + rdTop;
             listItemOnGround.push(item);
-
-			var item2:WDItem = new ItemBox();
-            item2.name = "item" + i;
-            item2.x = Math.random() * rdRangeW + rdLeft;
-            item2.y = Math.random() * rdRangeH + rdTop;
-            listItemOnGround.push(item2);
         }
         var car:WDItem = new ItemCar();
         car.x = Math.random() * rdRangeW + rdLeft;
