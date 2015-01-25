@@ -13,7 +13,7 @@ class Box extends FlxSprite {
         centerOffsets();
 
         // Setup physics
-        this.drag.set(300, 300);
+        this.drag.set(200, 200);
         this.width = 36;
         this.height = 14;
         this.offset.set(8, 22);
