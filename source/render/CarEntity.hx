@@ -1,6 +1,7 @@
 package render;
+import flixel.FlxSprite;
 
-class CarEntity extends flixel.FlxSprite {
+class CarEntity extends FlxSprite {
     private var SPEED:Int = 100;
     public function new(x:Float, y:Float, dir:Int) {
         super(x, y);
@@ -34,5 +35,6 @@ class CarEntity extends flixel.FlxSprite {
         }
 
         this.scale.set(0.3, 0.3);
+		this.updateHitbox();
     }
 }
