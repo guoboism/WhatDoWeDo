@@ -4,7 +4,7 @@ import flixel.FlxSprite;
 
 class Box extends FlxSprite {
 
-    public function new(x:Int, y:Int) {
+    public function new(x:Float, y:Float) {
         super(x, y);
 
         // Initialize graphics

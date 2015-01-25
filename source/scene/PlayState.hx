@@ -97,24 +97,25 @@ class PlayState extends FlxState {
             entities.add(itemRender);
         }
 
-        // Add 3 boxes to the scene
+        // Add some boxes to make up a challenge
+        var left:Int = 20,
+            top:Int = 260;
         _boxes = new FlxTypedGroup<Box>();
-        for (i in 0...3) {
-            var box:Box = new Box(
-                FlxRandom.intRanged(BOX_MARGIN_LEFT, BOX_MARGIN_RIGHT),
-                FlxRandom.intRanged(BOX_MARGIN_TOP, BOX_MARGIN_BOTTOM)
-            );
-            _boxes.add(box);
-            entities.add(box);
-        }
+        var box:Box;
+        box = new Box(left + 64 * 0.5, top + 48 * 0.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 1.5, top + 48 * 0.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 2.5, top + 48 * 0.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 2.5, top + 48 * 1.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 0.5, top + 48 * 2.5); _boxes.add(box); entities.add(box);
+        box = new Box(left + 64 * 1.5, top + 48 * 2.5); _boxes.add(box); entities.add(box);
 
         // Create an UI layer
         uiLayer = new FlxGroup();
 
         // Create our player
         _player = new PlayerRender(uiLayer);
-        _player.x = 100;
-        _player.y = 200;
+        _player.x = 200;
+        _player.y = 400;
         entities.add(_player);
 
         // Foreground

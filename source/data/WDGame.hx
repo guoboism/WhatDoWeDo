@@ -41,12 +41,12 @@ class WDGame
 
 
         //puts some test data
-        var rdRangeW:Float = 18 * 32;
-        var rdRangeH:Float = 12 * 32;
+        var rdRangeW:Float = 14 * 32;
+        var rdRangeH:Float = 10 * 32;
         var rdLeft:Float = 1 * 32;
         var rdTop:Float = 6 * 32;
 
-        for(i in 0...5){
+        for (i in 0...8) {
             var item:WDItem = new ItemStone();
             item.name = "item" + i;
             item.x = Math.random() * rdRangeW + rdLeft;
@@ -54,8 +54,8 @@ class WDGame
             listItemOnGround.push(item);
         }
         var car:WDItem = new ItemCar();
-        car.x = Math.random() * rdRangeW + rdLeft;
-        car.y = Math.random() * rdRangeH + rdTop;
+        car.x = 50;
+        car.y = 300;
         listItemOnGround.push(car);
     }
 
