@@ -4,7 +4,7 @@ import flixel.FlxSprite;
 
 class Box extends FlxSprite {
 
-    public function new(x:Int, y:Int) {
+    public function new(x:Float, y:Float) {
         super(x, y);
 
         // Initialize graphics
@@ -13,7 +13,7 @@ class Box extends FlxSprite {
         centerOffsets();
 
         // Setup physics
-        this.drag.set(300, 300);
+        this.drag.set(200, 200);
         this.width = 36;
         this.height = 14;
         this.offset.set(8, 22);

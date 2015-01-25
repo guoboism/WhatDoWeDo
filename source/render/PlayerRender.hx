@@ -155,8 +155,8 @@ class StateCatchBox extends State {
         }
 
         // Sync box with player
-        target.catchedBox.x = target.x + _boxToTargetOffset.x;
-        target.catchedBox.y = target.y + _boxToTargetOffset.y;
+        // target.catchedBox.x = target.x + _boxToTargetOffset.x;
+        // target.catchedBox.y = target.y + _boxToTargetOffset.y;
     }
     override public function exit() {
         target.catchedBox = null;
@@ -228,8 +228,8 @@ class PlayerRender extends FlxSprite {
         _releaseBtn.scale.set(0.3, 0.3);
         _releaseBtn.centerOrigin();
         // uiLayer.add(_thinkbox);
-        uiLayer.add(_openBoxBtn);
-        uiLayer.add(_releaseBtn);
+        // uiLayer.add(_openBoxBtn);
+        // uiLayer.add(_releaseBtn);
 
         // Setup AI
         _stateFree = new StateFree(this);
@@ -274,9 +274,8 @@ class PlayerRender extends FlxSprite {
 
     public function touchesBox(box:Box):Void {
         if (_brain.currState != _stateCatch) {
-            trace("touch box");
-            _brain.changeState(_stateCatch);
-            catchedBox = box;
+            // _brain.changeState(_stateCatch);
+            // catchedBox = box;
         }
     }
 
@@ -298,11 +297,11 @@ class PlayerRender extends FlxSprite {
     private function pickItem(item:ItemRender):Void {
         WDGame.getSelf().pickUpItem(item.itemData);
 
-        trace("Picked " + WDGame.getSelf().bagItems.length + " items");
+        // trace("Picked " + WDGame.getSelf().bagItems.length + " items");
     }
 
     private function openBox() {
-        trace("try to open box");
+        // trace("try to open box");
     }
 
     private function releaseBox() {
