@@ -7,7 +7,7 @@ import flixel.tweens.FlxEase;
 class StoneEntity extends FlxSprite {
     private var HORIZONTAL_DIST:Int = 200;
     private var VERTICAL_DIST:Int = 140;
-    private var FALL_TIME:Float = 1.6;
+    private var FALL_TIME:Float = 1.0;
     public function new(x:Float, y:Float, dir:Int) {
         super(x, y);
         this.loadGraphic(AssetPaths.STONE1__png);
@@ -25,7 +25,18 @@ class StoneEntity extends FlxSprite {
             FlxTween.tween(this, {
                 x: this.x - HORIZONTAL_DIST
             }, FALL_TIME, {
-                ease: FlxEase.circOut
+                ease: FlxEase.quadOut
+            });
+            FlxTween.tween(this, {
+                y: this.y - 40
+            }, FALL_TIME / 2, {
+                ease: FlxEase.cubeOut
+            });
+            FlxTween.tween(this, {
+                y: this.y
+            }, FALL_TIME / 2, {
+                ease: FlxEase.cubeIn,
+                startDelay: FALL_TIME / 2
             });
         }
         else if (dir == 1) { // Up
@@ -43,7 +54,18 @@ class StoneEntity extends FlxSprite {
             FlxTween.tween(this, {
                 x: this.x + HORIZONTAL_DIST
             }, FALL_TIME, {
-                ease: FlxEase.circOut
+                ease: FlxEase.quadOut
+            });
+            FlxTween.tween(this, {
+                y: this.y - 40
+            }, FALL_TIME / 2, {
+                ease: FlxEase.cubeOut
+            });
+            FlxTween.tween(this, {
+                y: this.y
+            }, FALL_TIME / 2, {
+                ease: FlxEase.cubeIn,
+                startDelay: FALL_TIME / 2
             });
         }
 
