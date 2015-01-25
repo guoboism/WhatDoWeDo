@@ -71,4 +71,22 @@ class StoneEntity extends FlxSprite {
 
         this.scale.set(0.3, 0.3);
     }
+    override public function update():Void {
+        super.update();
+        perspective();
+    }
+    private function perspective():Void {
+        var distance = Math.abs(this.y - 32 * 6);
+        var maxDistance = 32 * 10;
+        this.scale.x = 0.5 *  Math.sqrt(distance) / Math.sqrt(maxDistance)+ 0.5;
+        if (this.scale.x  > 1) {
+            this.scale.x  = 1;
+        }
+        else if (this.scale.x  < 0.5) {
+            this.scale.x  = 0.5;
+        }
+        scale.x *= 0.3;
+        this.scale.y = this.scale.x;
+        this.centerOrigin();
+    }
 }
