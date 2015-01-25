@@ -11,8 +11,8 @@ class ItemStone extends WDItem
 	{
 		super();
 
-		this.name = "Stone";
-		opName = "Throw";
+		this.name = "STONE";
+		opName = "THROW";
 		this.pathOnGround = AssetPaths.STONE1__png;
 		this.pathIcon = AssetPaths.STONE1__png;
 

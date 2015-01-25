@@ -11,8 +11,8 @@ class ItemBox extends WDItem
 	{
 		super();
 
-		this.name = "Box";
-		opName = "Drop";
+		this.name = "BOX";
+		opName = "DROP";
 		this.pathIcon = AssetPaths.BOX1__png;
 		this.pathOnGround = AssetPaths.BOX1__png;
 

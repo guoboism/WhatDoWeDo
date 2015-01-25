@@ -47,8 +47,8 @@ class PlayState extends FlxState {
     public var _player:PlayerRender;
     public var cars:FlxTypedGroup<render.CarEntity>;
     private var _boxes:FlxTypedGroup<Box>;
-    private var _itemGroup:FlxTypedGroup<ItemRender>;
-
+    public var _itemGroup:FlxTypedGroup<ItemRender>;
+	
     // UI stuff
     public var uiLayer:FlxGroup;
     public var o2bg:FlxSprite;
@@ -171,15 +171,15 @@ class PlayState extends FlxState {
         FlxG.collide(_boxes, _boxes);
         FlxG.collide(cars, sceneMap);
         FlxG.collide(_player, sceneMap);
-
+		
         entities.sort(FlxSort.byY);
-
+		
         // Update O2 graphic
         var prop:Float = WDGame.getSelf().curO2 / WDGame.getSelf().MAX_O2;
         var length:Int = cast 320 * prop;
         o2fill.makeGraphic(length, 60, FlxColor.AQUAMARINE);
     }
-
+	
     public function touchesItem(_player:PlayerRender, item:ItemRender):Void {
         _player.touchesItem(item);
     }

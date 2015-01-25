@@ -17,11 +17,10 @@ class WDGame
 {
 
     public var MAX_BAG_ITEM = 5;
-	public var MAX_O2:Int = 1000;
-	public var curO2:Int = 1000;
+	public var MAX_O2:Int = 250;
+	public var curO2:Int = 250;
 	
     //背包物品
-    public var bagIitemDirty:Bool = false;
     public var bagItems:Array<WDItem>;
 
     //地上物品列表
@@ -56,6 +55,7 @@ class WDGame
             item.y = Math.random() * rdRangeH + rdTop;
             listItemOnGround.push(item);
         }
+		
         var car:WDItem = new ItemCar();
         car.x = 50;
         car.y = 300;
@@ -70,7 +70,6 @@ class WDGame
         bagItems.push(wdItem);
         wdItem.linkedRender.destroy();
         listItemOnGround.remove(wdItem);
-        bagIitemDirty = true;
     }
 	
     public function tryPickUpItem():Bool{
@@ -82,7 +81,6 @@ class WDGame
         if(selectedItemOnGround != null){
             pickUpItem(selectedItemOnGround);
             selectedItemOnGround  = null;
-            // PlayState.getSelf().player.justMoved = true;
         }
 		
         return true;

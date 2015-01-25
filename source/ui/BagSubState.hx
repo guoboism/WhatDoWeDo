@@ -21,19 +21,23 @@ import render.StoneEntity;
 class BagSubState extends FlxSubState
 {
 
-
 	public var curSelInd:Int = 0;//from 0
 	public var bigItem:FlxSprite;
 	public var title:FlxText;
 	public var btnText:FlxText;
+	public var bottomBtn:FlxButton;
 
-	private var PAGE_BTN_OFFSET:Int = 300;
+	private var PAGE_BTN_OFFSET:Int = 370;
 
 	public function new(BGColor:Int=FlxColor.TRANSPARENT)
 	{
 		super(BGColor);
-
-
+		
+		var titleBg:FlxSprite = new FlxSprite(480, 0);
+		titleBg.loadGraphic(AssetPaths.title__fw__png);
+		titleBg.x = 480 - titleBg.frameWidth / 2;
+		add(titleBg);
+		
 		//add bg
 		var bg:FlxSprite = new FlxSprite(0,0);
 		bg.loadGraphic(AssetPaths.bagbg__fw__png);
@@ -43,10 +47,9 @@ class BagSubState extends FlxSubState
 		bg.y = 320 - bg.frameHeight / 2;
 		add(bg);
 
-		//add event
-
 		//big item to render
-		bigItem = new FlxSprite(480,320);
+		bigItem = new FlxSprite(480, 320);
+		bigItem.visible = false;
 		add(bigItem);
 
 		//arrow btn
@@ -67,25 +70,27 @@ class BagSubState extends FlxSubState
 		add(closeBtn);
 
 		//var title
-		title = new FlxText(480-400, 160, 800, "No Item", 96);
+		title = new FlxText(480-400, 0, 800, "NO ITEM", 96);
 		title.font = AssetPaths.Anton__ttf;
 		title.alignment = "center";
 		add(title);
 
 		//bottom btn
-		var bottomBtn:FlxButton = new FlxButton(480, 395, "", onAction);
+		bottomBtn = new FlxButton(480, 505, "", onAction);
 		bottomBtn.loadGraphic(AssetPaths.throwbutton__fw__png);
 		bottomBtn.x -= bottomBtn.frameWidth / 2;
 		add(bottomBtn);
-
-
+		
 		//bottom text
-		btnText = new FlxText(480-400, bottomBtn.y + 20, 800, "Throw", 64);
+		btnText = new FlxText(480-400, bottomBtn.y + 20, 800, "THROW", 64);
 		btnText.font = AssetPaths.Anton__ttf;
 		btnText.alignment = "center";
 		add(btnText);
-
+		
 		renderItem();
+		
+		//sound open
+		FlxG.sound.play(AssetPaths.open_box__wav);
 	}
 
 	public function renderItem():Void{
@@ -93,17 +98,23 @@ class BagSubState extends FlxSubState
 
 		if(WDGame.getSelf().bagItems.length == 0){
 			//no item to show
-
+			
+			bigItem.visible = false;
+			btnText.visible = false;
+			bottomBtn.visible = false;
 		}else{
 
 			var wdItem:WDItem = WDGame.getSelf().bagItems[curSelInd];
 			bigItem.loadGraphic(wdItem.pathIcon);
 			bigItem.x = 480 - bigItem.frameWidth * bigItem.scale.x / 2;
 			bigItem.y = 320 - bigItem.frameHeight * bigItem.scale.y / 2;
+			bigItem.visible = true;
 			//update bottom content
 
 			title.text = wdItem.name;
 			btnText.text = wdItem.opName;
+			btnText.visible = true;
+			bottomBtn.visible = true;
 		}
 	}
 
@@ -119,6 +130,9 @@ class BagSubState extends FlxSubState
 
 	function onClose():Void{
 		this._parentState.closeSubState();
+		
+		//sound close
+		FlxG.sound.play(AssetPaths.Close_box__wav);
 	}
 
 	function onLeft():Void{
@@ -128,7 +142,7 @@ class BagSubState extends FlxSubState
 		}
 		renderItem();
 	}
-
+	
 	function onRight():Void{
 		curSelInd++;
 		if(curSelInd >= WDGame.getSelf().bagItems.length){
@@ -139,19 +153,33 @@ class BagSubState extends FlxSubState
 
 	function onAction():Void {
 		var wdItem:WDItem = WDGame.getSelf().bagItems[curSelInd];
-		if (wdItem.name == "Car") {
+		if(wdItem == null){
+			return;
+		}
+		
+		if (wdItem.name == "CAR") {
+			
 			var state:PlayState = cast this._parentState;
-			var carEntity:CarEntity = new CarEntity(state._player.x, state._player.y, state._player._lastFacing);
+			var carEntity:CarEntity = new CarEntity(wdItem);
+			carEntity.makeCarRun(state._player.x, state._player.y, state._player._lastFacing);
 			state.cars.add(carEntity);
+			state._itemGroup.add(carEntity);
 			state.entities.add(carEntity);
+			
+			wdItem.linkedRender = carEntity;
+			WDGame.getSelf().listItemOnGround.push(wdItem);
+			
 			this.onClose();
 		}
-		else if (wdItem.opName == "Throw") {
+		else if (wdItem.opName == "THROW") {
 			var state:PlayState = cast this._parentState;
 			var stoneEntity:StoneEntity = new StoneEntity(state._player.x, state._player.y, state._player._lastFacing);
 			state.entities.add(stoneEntity);
 			this.onClose();
 		}
+		
+		//delete this item
+		WDGame.getSelf().bagItems.remove(wdItem);
 	}
 
 }

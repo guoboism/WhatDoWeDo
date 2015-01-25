@@ -1,10 +1,17 @@
 package render;
+import data.WDItem;
 import flixel.FlxSprite;
 
-class CarEntity extends FlxSprite {
+class CarEntity extends ItemRender {
     private var SPEED:Int = 100;
-    public function new(x:Float, y:Float, dir:Int) {
-        super(x, y);
+	public function new(wdItem:WDItem){
+		super(wdItem);
+	}
+	
+    public function makeCarRun(x_:Float, y_:Float, dir:Int) {
+		
+        x = x_;
+		y = y_;
         if (dir == 2) { // Down
             this.loadGraphic(AssetPaths.CAR2__png);
             trace("dir == 2");
