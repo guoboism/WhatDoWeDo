@@ -3,7 +3,10 @@ import data.item.ItemBox;
 import data.item.ItemStone;
 import data.item.ItemCar;
 import data.WDItem;
+import flixel.FlxG;
+import haxe.Timer;
 import render.ItemRender;
+import scene.EndState;
 import scene.PlayState;
 
 /**
@@ -14,9 +17,9 @@ class WDGame
 {
 
     public var MAX_BAG_ITEM = 5;
-	public var MAX_O2 = 100;
-	public var curO2 = 66;
-
+	public var MAX_O2:Int = 1000;
+	public var curO2:Int = 1000;
+	
     //背包物品
     public var bagIitemDirty:Bool = false;
     public var bagItems:Array<WDItem>;
@@ -57,6 +60,10 @@ class WDGame
         car.x = 50;
         car.y = 300;
         listItemOnGround.push(car);
+		
+		//add timer
+		var timer:Timer = new Timer(1000);
+		timer.run = onSecond;
     }
 
     public function pickUpItem(wdItem:WDItem):Void {
@@ -65,7 +72,7 @@ class WDGame
         listItemOnGround.remove(wdItem);
         bagIitemDirty = true;
     }
-
+	
     public function tryPickUpItem():Bool{
 
         if(bagItems.length >= MAX_BAG_ITEM){
@@ -77,8 +84,25 @@ class WDGame
             selectedItemOnGround  = null;
             // PlayState.getSelf().player.justMoved = true;
         }
-
+		
         return true;
     }
+	
+	public function castO2(cost:Int):Void{
+		
+		curO2 -= cost;
+		if (curO2 < 0) curO2 = 0;
+		
+		if(curO2 == 0){
+			//end game
+			
+			FlxG.switchState(new EndState());
+		}
+	}
+	
+	public function onSecond():Void{
+		trace("on second:" + curO2);
+		curO2 -= 1;
+	}
 
 }

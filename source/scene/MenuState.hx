@@ -19,9 +19,12 @@ class MenuState extends FlxState {
      */
     override public function create():Void {
         super.create();
-
-        _playButton = new FlxButton(FlxG.width / 2 - 80 / 2, FlxG.height / 2 - 20 / 2, "Enjoy", onPlay);
-        add(_playButton);
+	
+		var titlePic:FlxSprite = new FlxSprite();
+		titlePic.loadGraphic(AssetPaths.img_title__png);
+		add(titlePic);
+		
+		FlxG.sound.playMusic(AssetPaths.nightmare__mp3);
     }
 
     /**
@@ -34,6 +37,7 @@ class MenuState extends FlxState {
 
     private function onPlay():Void {
         FlxG.switchState(new PlayState());
+		FlxG.sound.play(AssetPaths.menu_click__wav);
     }
 
     /**
@@ -41,6 +45,10 @@ class MenuState extends FlxState {
      */
     override public function update():Void {
         super.update();
+		
+		if(FlxG.mouse.justPressed){
+			onPlay();
+		}
     }
 
 }

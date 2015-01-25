@@ -147,6 +147,9 @@ class PlayState extends FlxState {
 		o2fill.makeGraphic(320, 60, FlxColor.AQUAMARINE);
 		add(o2fill);
         add(o2bg);
+		
+		FlxG.sound.playMusic(AssetPaths.D_space__mp3);
+		FlxG.sound.play(AssetPaths.Boil_MoltenLiquidLoop2__wav, 0.5, true);
     }
 
     /**
