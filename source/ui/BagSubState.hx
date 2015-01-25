@@ -12,6 +12,7 @@ import source.data.WDGame;
 import scene.PlayState;
 
 import render.CarEntity;
+import render.StoneEntity;
 
 /**
  * ...
@@ -136,13 +137,19 @@ class BagSubState extends FlxSubState
 		renderItem();
 	}
 
-	function onAction():Void{
+	function onAction():Void {
 		var wdItem:WDItem = WDGame.getSelf().bagItems[curSelInd];
 		if (wdItem.name == "Car") {
 			var state:PlayState = cast this._parentState;
 			var carEntity:CarEntity = new CarEntity(state._player.x, state._player.y, state._player._lastFacing);
 			state.cars.add(carEntity);
 			state.entities.add(carEntity);
+			this.onClose();
+		}
+		else if (wdItem.opName == "Throw") {
+			var state:PlayState = cast this._parentState;
+			var stoneEntity:StoneEntity = new StoneEntity(state._player.x, state._player.y, state._player._lastFacing);
+			state.entities.add(stoneEntity);
 			this.onClose();
 		}
 	}

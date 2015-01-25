@@ -2,21 +2,21 @@ package data.item;
 
 /**
  * ...
- * @author 
+ * @author
  */
 class ItemBox extends WDItem
 {
 
-	public function new() 
+	public function new()
 	{
 		super();
-		
-		this.name = "box";
+
+		this.name = "Box";
 		opName = "Drop";
 		this.pathIcon = AssetPaths.BOX1__png;
 		this.pathOnGround = AssetPaths.BOX1__png;
-		
+
 		scaleOnGround = 0.3;
 	}
-	
+
 }
