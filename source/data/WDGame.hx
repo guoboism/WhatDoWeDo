@@ -1,6 +1,7 @@
 package source.data;
 import data.item.ItemBox;
 import data.item.ItemStone;
+import data.item.ItemCar;
 import data.WDItem;
 import render.ItemRender;
 import scene.PlayState;
@@ -15,7 +16,7 @@ class WDGame
     public var MAX_BAG_ITEM = 5;
 	public var MAX_O2 = 100;
 	public var curO2 = 66;
-	
+
     //背包物品
     public var bagIitemDirty:Bool = false;
     public var bagItems:Array<WDItem>;
@@ -51,13 +52,17 @@ class WDGame
             item.x = Math.random() * rdRangeW + rdLeft;
             item.y = Math.random() * rdRangeH + rdTop;
             listItemOnGround.push(item);
-			
+
 			var item2:WDItem = new ItemBox();
             item2.name = "item" + i;
             item2.x = Math.random() * rdRangeW + rdLeft;
             item2.y = Math.random() * rdRangeH + rdTop;
             listItemOnGround.push(item2);
         }
+        var car:WDItem = new ItemCar();
+        car.x = Math.random() * rdRangeW + rdLeft;
+        car.y = Math.random() * rdRangeH + rdTop;
+        listItemOnGround.push(car);
     }
 
     public function pickUpItem(wdItem:WDItem):Void {

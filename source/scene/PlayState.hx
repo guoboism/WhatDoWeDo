@@ -44,7 +44,8 @@ class PlayState extends FlxState {
     public var entities:FlxTypedGroup<flixel.FlxObject>;
 
     // Sprites
-    private var _player:PlayerRender;
+    public var _player:PlayerRender;
+    public var cars:FlxTypedGroup<render.CarEntity>;
     private var _boxes:FlxTypedGroup<Box>;
     private var _itemGroup:FlxTypedGroup<ItemRender>;
 
@@ -84,6 +85,7 @@ class PlayState extends FlxState {
         // Entities
         entities = new FlxTypedGroup<flixel.FlxObject>();
         add(entities);
+        cars = new FlxTypedGroup<render.CarEntity>();
 
         // Generate items
         _itemGroup = new FlxTypedGroup<ItemRender>();
@@ -156,6 +158,7 @@ class PlayState extends FlxState {
         FlxG.overlap(_player, _itemGroup, touchesItem);
         FlxG.collide(_player, _boxes, touchesBox);
         FlxG.collide(_boxes, _boxes);
+        FlxG.collide(cars, sceneMap);
         FlxG.collide(_player, sceneMap);
 
         entities.sort(FlxSort.byY);
