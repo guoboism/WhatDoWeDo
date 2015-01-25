@@ -188,6 +188,7 @@ class PlayerRender extends FlxSprite {
     private var _stateCatch:StateCatchBox;
 
     // HUD
+    // private var _thinkbox:FlxSprite;
     private var _openBoxBtn:FlxButton;
     private var _releaseBtn:FlxButton;
 
@@ -215,8 +216,18 @@ class PlayerRender extends FlxSprite {
         centerOffsets();
 
         // Init HUD
-        _openBoxBtn = new FlxButton(0, 0);
-        _releaseBtn = new FlxButton(0, 0);
+        // _thinkbox = new FlxSprite(0, 0).loadGraphic(AssetPaths.thinkbutton__fw__png);
+        // _thinkbox.scale.set(0.3, 0.3);
+        // _thinkbox.centerOrigin();
+        _openBoxBtn = new FlxButton(0, 0, openBox);
+        _openBoxBtn.loadGraphic(AssetPaths.openbox__fw__png);
+        _openBoxBtn.scale.set(0.3, 0.3);
+        _openBoxBtn.centerOrigin();
+        _releaseBtn = new FlxButton(0, 0, releaseBox);
+        _releaseBtn.loadGraphic(AssetPaths.release__fw__png);
+        _releaseBtn.scale.set(0.3, 0.3);
+        _releaseBtn.centerOrigin();
+        // uiLayer.add(_thinkbox);
         uiLayer.add(_openBoxBtn);
         uiLayer.add(_releaseBtn);
 
@@ -241,11 +252,12 @@ class PlayerRender extends FlxSprite {
         _brain.update();
 
         // Sync HUD with player
-        _openBoxBtn.x = x - 60;
-        _openBoxBtn.y = y - 20;
-
-        _releaseBtn.x = x + 60;
-        _releaseBtn.y = y - 20;
+        /*_thinkbox.x = x;
+        _thinkbox.y = y - 150;*/
+        _openBoxBtn.x = x - 80;
+        _openBoxBtn.y = y - 100;
+        _releaseBtn.x = x - 16;
+        _releaseBtn.y = y - 94;
 
         // Perspective effect
         perspective();
@@ -287,6 +299,15 @@ class PlayerRender extends FlxSprite {
         WDGame.getSelf().pickUpItem(item.itemData);
 
         trace("Picked " + WDGame.getSelf().bagItems.length + " items");
+    }
+
+    private function openBox() {
+        trace("try to open box");
+    }
+
+    private function releaseBox() {
+        _brain.changeState(_stateFree);
+        catchedBox = null;
     }
 
 }
