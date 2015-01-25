@@ -220,11 +220,6 @@ class PlayerRender extends FlxSprite {
         uiLayer.add(_openBoxBtn);
         uiLayer.add(_releaseBtn);
 
-        // Setup physics
-        this.width = 30;
-        this.height = 30;
-        this.offset.set(4, 40);
-
         // Setup AI
         _stateFree = new StateFree(this);
         _stateCatch = new StateCatchBox(this);
@@ -245,6 +240,14 @@ class PlayerRender extends FlxSprite {
 
         _brain.update();
 
+        // Sync HUD with player
+        _openBoxBtn.x = x - 60;
+        _openBoxBtn.y = y - 20;
+
+        _releaseBtn.x = x + 60;
+        _releaseBtn.y = y - 20;
+
+        // Perspective effect
         perspective();
     }
 
@@ -266,10 +269,9 @@ class PlayerRender extends FlxSprite {
     }
 
     private function perspective():Void {
-        var distance = this.y - 32 * 6;
+        var distance = Math.abs(this.y - 32 * 6);
         var maxDistance = 32 * 10;
-        this.scale.x = 0.5 *  Math.sqrt(distance) / Math.sqrt(maxDistance) + 0.5;
-
+        this.scale.x = 0.5 *  Math.sqrt(distance) / Math.sqrt(maxDistance)+ 0.5;
         if (this.scale.x  > 1) {
             this.scale.x  = 1;
         }
