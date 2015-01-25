@@ -211,7 +211,7 @@ class PlayerRender extends FlxSprite {
 
         this.animation.play("stay_2");
 
-        this.setSize(10, 10);
+        this.setSize(30, 30);
         centerOrigin();
         centerOffsets();
 

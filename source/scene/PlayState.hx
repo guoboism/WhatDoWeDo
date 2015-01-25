@@ -73,6 +73,7 @@ class PlayState extends FlxState {
 
         // Tilemap for terrain collision
         sceneMap = new FlxTilemap();
+		sceneMap.visible = false;
         sceneMap.loadMap(Assets.getText(AssetPaths.mapCSV_Group2_Map1__csv), AssetPaths.img_tiles__png, 32, 32,0,0,1,2);
         add(sceneMap);
 

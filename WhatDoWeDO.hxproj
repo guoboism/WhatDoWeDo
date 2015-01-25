@@ -23,12 +23,12 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="flixel=3.3.6&#xA;openfl=2.2.4&#xA;lime=2.0.6&#xA;tools=2.0.6&#xA;no-compilation&#xA;openfl-flash&#xA;FLX_RENDER_BLIT&#xA;web" />
+    <option directives="flixel=3.3.6&#xA;openfl=2.2.4&#xA;lime=2.0.6&#xA;tools=2.0.6&#xA;FLX_NO_DEBUG&#xA;no-compilation&#xA;NAPE_RELEASE_BUILD&#xA;openfl-flash&#xA;FLX_RENDER_BLIT&#xA;web" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="-swf-version 11.8&#xA;-debug " />
+    <option additional="-swf-version 11.8" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
